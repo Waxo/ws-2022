@@ -49,10 +49,10 @@ const recommend = () => {
     recommendationList = R.sort(() => Math.random() > 0.5, db);
   } else {
     console.log('exploit');
-    recommendationList = R.sort(
-      (a, b) => computeRatio_(a) > computeRatio_(b),
-      db
-    );
+    recommendationList = R.pipe(
+      R.sort((a, b) => computeRatio_(a) > computeRatio_(b)),
+      R.slice(0, 5)
+    )(db);
   }
   return updateViews_(recommendationList);
 };
